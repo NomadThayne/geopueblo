@@ -23,11 +23,27 @@ const pillars = [
     href: '/services',
   },
   {
+    icon: '✈️',
+    title: 'Global Travel',
+    desc: 'Navigate the world with confidence — visas, flights, accommodation, and local tips for the cross-border traveler.',
+    href: '/travel',
+  },
+  {
     icon: '🤝',
     title: 'Global Community',
     desc: 'Connect with others navigating life between cultures — shared stories, local knowledge, and a village that spans the world.',
     href: '/community',
   },
+];
+
+// Free Unsplash city photos — all free for commercial use, no attribution required
+const cityPhotos = [
+  { id: 'photo-1538970272646-f61fabb3a8a2', city: 'Tokyo' },
+  { id: 'photo-1513635269975-59663e0ac1ad', city: 'London' },
+  { id: 'photo-1547981609-4b6bfe67ca0b', city: 'New York' },
+  { id: 'photo-1502602898657-3e91760cbb34', city: 'Paris' },
+  { id: 'photo-1512453979798-5ea266f8880c', city: 'Dubai' },
+  { id: 'photo-1534430480872-3498386e7856', city: 'São Paulo' },
 ];
 
 const topics = [
@@ -36,7 +52,7 @@ const topics = [
   'Package forwarding',
   'Health products globally',
   'Remote work tools',
-  'Cross-border healthcare',
+  'Cross-border travel tips',
   'Diaspora community',
   'Multi-currency accounts',
 ];
@@ -64,23 +80,79 @@ const topics = [
 
   <!-- BAND -->
   <div class="band">
-    <p>🌎 &nbsp; Global Money &nbsp;·&nbsp; Global Goods &nbsp;·&nbsp; Global Services &nbsp;·&nbsp; Global Community</p>
+    <p>🌎 &nbsp; Global Money &nbsp;·&nbsp; Global Goods &nbsp;·&nbsp; Global Services &nbsp;·&nbsp; Global Travel &nbsp;·&nbsp; Global Community</p>
   </div>
 
-  <!-- PILLARS -->
-  <section class="section pillars-section">
-    <h2 class="section-title">What is GeoPueblo?</h2>
-    <p class="section-sub">Your guide to living, moving, and thriving across the world's villages</p>
-    <div class="pillars">
-      {pillars.map(p => (
-        <a href={p.href} class="pillar">
-          <div class="pillar-icon">{p.icon}</div>
-          <h3>{p.title}</h3>
-          <p>{p.desc}</p>
-        </a>
+  <!-- PILLARS with city photo rotator background -->
+  <section class="pillars-section">
+
+    <!-- City photo rotator -->
+    <div class="city-rotator" id="cityRotator">
+      {cityPhotos.map((photo, i) => (
+        <div
+          class={`city-slide ${i === 0 ? 'active' : ''}`}
+          style={`background-image: url('https://images.unsplash.com/${photo.id}?w=1400&q=70&auto=format&fit=crop')`}
+          data-city={photo.city}
+        ></div>
       ))}
+      <div class="city-overlay"></div>
+      <div class="city-label" id="cityLabel">{cityPhotos[0].city}</div>
+      <div class="city-dots">
+        {cityPhotos.map((_, i) => (
+          <button class={`city-dot ${i === 0 ? 'active' : ''}`} data-index={i} aria-label={`Show ${cityPhotos[i].city}`}></button>
+        ))}
+      </div>
+    </div>
+
+    <div class="section pillars-inner">
+      <h2 class="section-title">What is GeoPueblo?</h2>
+      <p class="section-sub">Your guide to living, moving, and thriving across the world's villages</p>
+      <div class="pillars">
+        {pillars.map(p => (
+          <a href={p.href} class="pillar">
+            <div class="pillar-icon">{p.icon}</div>
+            <h3>{p.title}</h3>
+            <p>{p.desc}</p>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
+
+  <script>
+    const slides = document.querySelectorAll('.city-slide');
+    const dots   = document.querySelectorAll('.city-dot');
+    const label  = document.getElementById('cityLabel');
+    let current  = 0;
+    let timer: ReturnType<typeof setInterval>;
+
+    function goTo(n: number) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = n;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      if (label) label.textContent = (slides[current] as HTMLElement).dataset.city || '';
+    }
+
+    function next() {
+      goTo((current + 1) % slides.length);
+    }
+
+    function startTimer() {
+      timer = setInterval(next, 4000);
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        clearInterval(timer);
+        goTo(i);
+        startTimer();
+      });
+    });
+
+    startTimer();
+  </script>
 
   <hr class="divider" />
 
@@ -247,10 +319,88 @@ const topics = [
     margin-bottom: 2.5rem;
   }
 
-  /* PILLARS */
+  /* PILLARS SECTION */
+  .pillars-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* CITY ROTATOR */
+  .city-rotator {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .city-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .city-slide.active {
+    opacity: 1;
+  }
+
+  .city-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(245, 240, 235, 0.91);
+  }
+
+  .city-label {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.5rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-terra);
+    opacity: 0.7;
+    z-index: 2;
+  }
+
+  .city-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 2;
+  }
+
+  .city-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: #D4C4B4;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s;
+  }
+
+  .city-dot.active {
+    background: var(--color-terra);
+  }
+
+  .pillars-inner {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 2rem 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* PILLARS GRID */
   .pillars {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
   }
 
