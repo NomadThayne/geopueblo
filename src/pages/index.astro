@@ -236,10 +236,8 @@ const topics = [
         if (!rate) return '';
         const fmt = rate >= 100 ? rate.toFixed(2) : rate >= 10 ? rate.toFixed(3) : rate.toFixed(4);
         return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
-      }).filter(Boolean).join('<span class="fx-sep">·</span>');
-      // Set animation duration based on number of items (30px per item approx)
-      const duration = FX_PAIRS.length * 3;
-      return `<div class="fx-scroll" style="animation-duration:${duration}s">${items}<span class="fx-sep">·</span>${items}</div>`;
+      }).filter(Boolean).join('<span class="fx-sep">|</span>');
+      return `<div class="fx-scroll">${items}<span class="fx-sep" style="padding:0 30px"></span>${items}</div>`;
     }
 
     async function loadFX() {
@@ -266,9 +264,9 @@ const topics = [
       const html = items.map(i =>
         `<a class="news-item" href="${i.link}" target="_blank" rel="noopener">${i.title}</a>`
       ).join('<span class="news-sep">◆</span>');
-      // Base speed on total character count — ~0.08s per character feels right
+      // Base speed on total character count — ~0.13s per character feels right
       const totalChars = items.reduce((sum, i) => sum + i.title.length, 0);
-      const duration = Math.max(60, Math.round(totalChars * 0.08));
+      const duration = Math.max(90, Math.round(totalChars * 0.13));
       return `<div class="news-scroll" style="animation: newsScroll ${duration}s linear infinite; display:flex; align-items:center; white-space:nowrap;">${html}<span class="news-sep">◆</span>${html}</div>`;
     }
 
@@ -615,31 +613,30 @@ const topics = [
 
   /* FX TICKER */
   .fx-bar {
-    background: #000000;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
+    background: #000;
     height: 40px;
-    border-bottom: 2px solid #333;
+    overflow: hidden;
     position: relative;
     z-index: 10;
+    border-bottom: 2px solid #333;
   }
 
   .fx-track {
-    flex: 1;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
     overflow: hidden;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    width: 0; /* forces flex child to respect overflow:hidden */
   }
 
   .fx-scroll {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    height: 40px;
     white-space: nowrap;
-    animation: fxScroll 25s linear infinite;
-    padding-left: 16px;
+    animation: fxScroll 35s linear infinite;
+  }
+
+  .fx-scroll:hover {
+    animation-play-state: paused;
   }
 
   @keyframes fxScroll {
@@ -650,23 +647,36 @@ const topics = [
   .fx-item {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 0 18px;
+    gap: 8px;
+    padding: 0 20px;
   }
 
   .fx-pair {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: #FFD580;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
   }
 
   .fx-rate {
     font-size: 14px;
-    font-weight: 800;
-    color: #ffffff;
+    font-weight: 700;
+    color: #fff;
     font-variant-numeric: tabular-nums;
+  }
+
+  .fx-sep {
+    color: #555;
+    font-size: 14px;
+    padding: 0 4px;
+  }
+
+  .fx-loading {
+    color: #888;
+    font-size: 12px;
+    padding: 0 20px;
+    line-height: 40px;
   }
 
   .fx-sep {
@@ -697,13 +707,12 @@ const topics = [
     flex: 1;
     overflow: hidden;
     height: 100%;
-    display: flex;
-    align-items: center;
-    width: 0;
-    padding-left: 16px;
+    position: relative;
   }
 
   .news-track {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
     display: flex;
     align-items: center;
     white-space: nowrap;
