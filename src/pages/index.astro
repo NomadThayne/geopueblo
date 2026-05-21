@@ -234,8 +234,10 @@ const topics = [
         if (!rate) return '';
         const fmt = rate >= 100 ? rate.toFixed(2) : rate >= 10 ? rate.toFixed(3) : rate.toFixed(4);
         return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
-      }).filter(Boolean).join('<span class="fx-sep">|</span>');
-      return `<div class="fx-scroll">${items}<span class="fx-sep" style="padding:0 30px"></span>${items}</div>`;
+      }).filter(Boolean);
+      // Each half must be identical (including trailing sep) for translateX(-50%) loop to be seamless
+      const half = items.join('<span class="fx-sep">|</span>') + '<span class="fx-sep" style="padding:0 24px">|</span>';
+      return `<div class="fx-scroll">${half}${half}</div>`;
     }
 
     async function loadFX() {
