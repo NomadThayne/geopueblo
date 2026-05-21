@@ -4,13 +4,17 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <span class="footer-logo">GeoPueblo</span>
-      <p>The world is your pueblo.</p>
+      <p>
+        <span class="t-en">The world is your pueblo.</span>
+        <span class="t-es" style="display:none">El mundo es tu pueblo.</span>
+      </p>
     </div>
     <div class="footer-links">
-      <a href="/blog">Articles</a>
-      <a href="/money">Global Money</a>
-      <a href="/culture">Culture</a>
-      <a href="/about">About</a>
+      <a href="/blog"><span class="t-en">Articles</span><span class="t-es" style="display:none">Artículos</span></a>
+      <a href="/money"><span class="t-en">Global Money</span><span class="t-es" style="display:none">Dinero Global</span></a>
+      <a href="/goods"><span class="t-en">Global Goods</span><span class="t-es" style="display:none">Productos</span></a>
+      <a href="/travel"><span class="t-en">Travel</span><span class="t-es" style="display:none">Viajes</span></a>
+      <a href="/about"><span class="t-en">About</span><span class="t-es" style="display:none">Nosotros</span></a>
     </div>
     <p class="footer-copy">© 2026 GeoPueblo · <a href="/privacy">Privacy</a></p>
   </div>
@@ -21,7 +25,6 @@
     background: var(--color-dark);
     padding: 3rem 2rem 2rem;
   }
-
   .footer-inner {
     max-width: 1100px;
     margin: 0 auto;
@@ -31,41 +34,34 @@
     gap: 1.5rem;
     text-align: center;
   }
-
   .footer-logo {
     font-size: 20px;
     font-weight: 600;
     color: var(--color-terra-lt);
   }
-
   .footer-brand p {
     font-size: 14px;
     color: #7A5C45;
     margin-top: 4px;
   }
-
   .footer-links {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .footer-links a {
     font-size: 14px;
     color: #A0836E;
     text-decoration: none;
   }
-
   .footer-links a:hover {
     color: var(--color-terra-lt);
   }
-
   .footer-copy {
     font-size: 12px;
     color: #5C4035;
   }
-
   .footer-copy a {
     color: #5C4035;
   }

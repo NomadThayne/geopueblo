@@ -6,32 +6,37 @@ import Footer from '../components/Footer.astro';
 const pillars = [
   {
     icon: '💸',
-    title: 'Global Money',
-    desc: 'Send, receive, and grow money across borders — smarter, faster, and with fewer fees wherever you are.',
+    en_title: 'Global Money',    es_title: 'Dinero Global',
+    en_desc: 'Send, receive, and grow money across borders — smarter, faster, and with fewer fees wherever you are.',
+    es_desc: 'Envía, recibe y haz crecer tu dinero sin fronteras — más inteligente, más rápido y con menos comisiones.',
     href: '/money',
   },
   {
     icon: '📦',
-    title: 'Global Goods',
-    desc: 'Access food, health, and everyday products from around the world — delivered to your door, no matter where that is.',
+    en_title: 'Global Goods',    es_title: 'Productos Globales',
+    en_desc: 'Access food, health, and everyday products from around the world — delivered to your door, no matter where that is.',
+    es_desc: 'Accede a alimentos, productos de salud y artículos del hogar de todo el mundo — entregados en tu puerta.',
     href: '/goods',
   },
   {
     icon: '🌐',
-    title: 'Global Services',
-    desc: 'Find the platforms, tools, and professionals that work across borders — from banking to healthcare to remote work.',
+    en_title: 'Global Services',  es_title: 'Servicios Globales',
+    en_desc: 'Find the platforms, tools, and professionals that work across borders — from banking to healthcare to remote work.',
+    es_desc: 'Encuentra plataformas, herramientas y profesionales que funcionan sin fronteras — de la banca a la salud.',
     href: '/services',
   },
   {
     icon: '✈️',
-    title: 'Global Travel',
-    desc: 'Navigate the world with confidence — visas, flights, accommodation, and local tips for the cross-border traveler.',
+    en_title: 'Global Travel',    es_title: 'Viajes Globales',
+    en_desc: 'Navigate the world with confidence — visas, flights, accommodation, and local tips for the cross-border traveler.',
+    es_desc: 'Navega el mundo con confianza — visas, vuelos, alojamiento y consejos locales para el viajero internacional.',
     href: '/travel',
   },
   {
     icon: '🤝',
-    title: 'Global Community',
-    desc: 'Connect with others navigating life between cultures — shared stories, local knowledge, and a village that spans the world.',
+    en_title: 'Global Community', es_title: 'Comunidad Global',
+    en_desc: 'Connect with others navigating life between cultures — shared stories, local knowledge, and a village that spans the world.',
+    es_desc: 'Conéctate con quienes navegan la vida entre culturas — historias compartidas y un pueblo que abarca el mundo.',
     href: '/community',
   },
 ];
@@ -66,21 +71,35 @@ const topics = [
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">GeoPueblo</p>
-      <h1>The world is<br>your <span>pueblo</span></h1>
+      <h1>
+        <span class="t-en">The world is<br>your <span>pueblo</span></span>
+        <span class="t-es" style="display:none">El mundo es<br>tu <span>pueblo</span></span>
+      </h1>
       <p class="hero-sub">
-        Explore money, culture, and life across borders —
-        for the globally curious and financially savvy.
+        <span class="t-en">Explore money, culture, and life across borders —
+        for the globally curious and financially savvy.</span>
+        <span class="t-es" style="display:none">Explora dinero, cultura y vida sin fronteras —
+        para el curioso global y el inteligente financiero.</span>
       </p>
       <div class="hero-cta">
-        <a href="/blog" class="btn-primary">Start exploring</a>
-        <a href="#subscribe" class="btn-secondary">Join the village</a>
+        <a href="/blog" class="btn-primary">
+          <span class="t-en">Start exploring</span>
+          <span class="t-es" style="display:none">Explorar ahora</span>
+        </a>
+        <a href="#subscribe" class="btn-secondary">
+          <span class="t-en">Join the village</span>
+          <span class="t-es" style="display:none">Únete al pueblo</span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- BAND -->
   <div class="band">
-    <p>🌎 &nbsp; Global Money &nbsp;·&nbsp; Global Goods &nbsp;·&nbsp; Global Services &nbsp;·&nbsp; Global Travel &nbsp;·&nbsp; Global Community</p>
+    <p>
+      <span class="t-en">🌎 &nbsp; Global Money &nbsp;·&nbsp; Global Goods &nbsp;·&nbsp; Global Services &nbsp;·&nbsp; Global Travel &nbsp;·&nbsp; Global Community</span>
+      <span class="t-es" style="display:none">🌎 &nbsp; Dinero Global &nbsp;·&nbsp; Productos &nbsp;·&nbsp; Servicios &nbsp;·&nbsp; Viajes &nbsp;·&nbsp; Comunidad</span>
+    </p>
   </div>
 
   <!-- PILLARS with city photo rotator background -->
@@ -105,14 +124,26 @@ const topics = [
     </div>
 
     <div class="section pillars-inner">
-      <h2 class="section-title">What is GeoPueblo?</h2>
-      <p class="section-sub">Your guide to living, moving, and thriving across the world's villages</p>
+      <h2 class="section-title">
+        <span class="t-en">What is GeoPueblo?</span>
+        <span class="t-es" style="display:none">¿Qué es GeoPueblo?</span>
+      </h2>
+      <p class="section-sub">
+        <span class="t-en">Your guide to living, moving, and thriving across the world's villages</span>
+        <span class="t-es" style="display:none">Tu guía para vivir, moverse y prosperar en los pueblos del mundo</span>
+      </p>
       <div class="pillars">
         {pillars.map(p => (
           <a href={p.href} class="pillar">
             <div class="pillar-icon">{p.icon}</div>
-            <h3>{p.title}</h3>
-            <p>{p.desc}</p>
+            <h3>
+              <span class="t-en">{p.en_title}</span>
+              <span class="t-es" style="display:none">{p.es_title}</span>
+            </h3>
+            <p>
+              <span class="t-en">{p.en_desc}</span>
+              <span class="t-es" style="display:none">{p.es_desc}</span>
+            </p>
           </a>
         ))}
       </div>
@@ -154,27 +185,123 @@ const topics = [
     startTimer();
   </script>
 
-  <hr class="divider" />
-
-  <!-- TOPICS -->
-  <section class="section topics-section">
-    <p class="topics-label">Featured topics</p>
-    <div class="topics">
-      {topics.map(t => <span class="topic-tag">{t}</span>)}
+  <!-- FX TICKER -->
+  <div class="fx-bar" id="fxBar">
+    <span class="fx-label">🌐 FX</span>
+    <div class="fx-track" id="fxTrack">
+      <span class="fx-loading">Loading rates…</span>
     </div>
-  </section>
+  </div>
+
+  <!-- NEWS TICKER -->
+  <div class="news-bar" id="newsBar">
+    <span class="news-label">📰 World</span>
+    <div class="news-track-wrap">
+      <div class="news-track" id="newsTrack">
+        <span class="news-loading">Loading headlines…</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── FX TICKER ──────────────────────────────────────────────
+    // Frankfurter API — free, no key, ECB data
+    // Focus on currencies relevant to GeoPueblo's markets
+    const FX_PAIRS = [
+      { from: 'USD', to: 'EUR',  label: 'EUR/USD' },
+      { from: 'USD', to: 'GBP',  label: 'GBP/USD' },
+      { from: 'USD', to: 'COP',  label: 'USD/COP' },
+      { from: 'USD', to: 'HNL',  label: 'USD/HNL' },
+      { from: 'USD', to: 'GTQ',  label: 'USD/GTQ' },
+      { from: 'USD', to: 'CAD',  label: 'USD/CAD' },
+      { from: 'USD', to: 'BRL',  label: 'USD/BRL' },
+      { from: 'USD', to: 'MXN',  label: 'USD/MXN' },
+      { from: 'USD', to: 'JPY',  label: 'USD/JPY' },
+      { from: 'USD', to: 'CNY',  label: 'USD/CNY' },
+    ];
+
+    async function loadFX() {
+      const track = document.getElementById('fxTrack');
+      if (!track) return;
+      try {
+        const res  = await fetch('https://api.frankfurter.dev/v2/latest?base=USD&symbols=EUR,GBP,COP,HNL,GTQ,CAD,BRL,MXN,JPY,CNY');
+        const data = await res.json();
+        const rates = data.rates;
+        const items = FX_PAIRS
+          .filter(p => rates[p.to])
+          .map(p => {
+            const rate = rates[p.to];
+            const fmt  = rate >= 100
+              ? rate.toFixed(2)
+              : rate >= 10
+                ? rate.toFixed(3)
+                : rate.toFixed(4);
+            return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
+          }).join('<span class="fx-sep">·</span>');
+        // Double up for seamless loop
+        track.innerHTML = `<div class="fx-scroll">${items}<span class="fx-sep">·</span>${items}</div>`;
+      } catch {
+        track.innerHTML = '<span class="fx-loading">Rates unavailable</span>';
+      }
+    }
+
+    // ── NEWS TICKER ────────────────────────────────────────────
+    // rss2json.com — free CORS proxy for BBC World News RSS
+    async function loadNews() {
+      const track = document.getElementById('newsTrack');
+      if (!track) return;
+      try {
+        const rss = 'https://feeds.bbci.co.uk/news/world/rss.xml';
+        const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}&count=15`;
+        const res  = await fetch(url);
+        const data = await res.json();
+        if (!data.items?.length) throw new Error('No items');
+        const items = data.items
+          .map((item: any) => `<a class="news-item" href="${item.link}" target="_blank" rel="noopener">${item.title}</a>`)
+          .join('<span class="news-sep">◆</span>');
+        // Double up for seamless loop
+        track.innerHTML = `${items}<span class="news-sep">◆</span>${items}`;
+      } catch {
+        // Fallback headlines if API unavailable
+        const fallback = [
+          'GeoPueblo: The world is your pueblo',
+          'Cross-border commerce connecting the Latin American diaspora',
+          'Global goods, money, services and travel — one platform',
+        ];
+        const items = fallback.map(h => `<span class="news-item">${h}</span>`).join('<span class="news-sep">◆</span>');
+        track.innerHTML = `${items}<span class="news-sep">◆</span>${items}`;
+      }
+    }
+
+    loadFX();
+    loadNews();
+    // Refresh FX every 5 minutes
+    setInterval(loadFX, 300000);
+  </script>
 
   <hr class="divider" />
 
   <!-- EMAIL SUBSCRIBE -->
   <section class="section subscribe-section" id="subscribe">
-    <h2 class="section-title">Join the village</h2>
-    <p class="section-sub">Get guides, tips, and stories — in English and Spanish.</p>
+    <h2 class="section-title">
+      <span class="t-en">Join the village</span>
+      <span class="t-es" style="display:none">Únete al pueblo</span>
+    </h2>
+    <p class="section-sub">
+      <span class="t-en">Get guides, tips, and stories — in English and Spanish.</span>
+      <span class="t-es" style="display:none">Recibe guías, consejos e historias — en inglés y español.</span>
+    </p>
     <form class="subscribe-form" action="#" method="POST">
       <input type="email" name="email" placeholder="your@email.com" required />
-      <button type="submit">Subscribe</button>
+      <button type="submit">
+        <span class="t-en">Subscribe</span>
+        <span class="t-es" style="display:none">Suscribirse</span>
+      </button>
     </form>
-    <p class="subscribe-note">No spam. Unsubscribe anytime.</p>
+    <p class="subscribe-note">
+      <span class="t-en">No spam. Unsubscribe anytime.</span>
+      <span class="t-es" style="display:none">Sin spam. Cancela cuando quieras.</span>
+    </p>
   </section>
 
   <Footer />
@@ -443,35 +570,161 @@ const topics = [
     margin: 0;
   }
 
-  /* TOPICS */
-  .topics-section {
-    text-align: center;
-    padding: 2.5rem 2rem;
-  }
-
-  .topics-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--color-gray-mid);
-    margin-bottom: 1rem;
-  }
-
-  .topics {
+  /* FX TICKER */
+  .fx-bar {
+    background: #1E0F05;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 36px;
+    border-bottom: 1px solid #3A2010;
   }
 
-  .topic-tag {
-    background: var(--color-gray-lt);
-    border: 1px solid #EDE5DA;
-    border-radius: 20px;
-    padding: 7px 16px;
-    font-size: 14px;
-    color: var(--color-gray-mid);
+  .fx-label {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-terra-lt);
+    padding: 0 14px;
+    border-right: 1px solid #3A2010;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: #2C1A0E;
+  }
+
+  .fx-track {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .fx-scroll {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    animation: fxScroll 40s linear infinite;
+  }
+
+  @keyframes fxScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .fx-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+  }
+
+  .fx-pair {
+    font-size: 11px;
+    font-weight: 600;
+    color: #A08060;
+    letter-spacing: 0.5px;
+  }
+
+  .fx-rate {
+    font-size: 12px;
+    font-weight: 500;
+    color: #E8D0B0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fx-sep {
+    color: #3A2010;
+    font-size: 10px;
+    padding: 0 4px;
+  }
+
+  .fx-loading {
+    font-size: 11px;
+    color: #6A4A30;
+    padding: 0 16px;
+  }
+
+  /* NEWS TICKER */
+  .news-bar {
+    background: #2C1A0E;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 38px;
+    border-bottom: 2px solid var(--color-terra);
+  }
+
+  .news-label {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1E0F05;
+    background: var(--color-terra-lt);
+    padding: 0 14px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .news-track-wrap {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .news-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: newsScroll 60s linear infinite;
+  }
+
+  .news-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes newsScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .news-item {
+    display: inline-block;
+    font-size: 12px;
+    color: #D4B896;
+    padding: 0 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+
+  .news-item:hover {
+    color: var(--color-terra-lt);
+    text-decoration: none;
+  }
+
+  .news-sep {
+    color: var(--color-terra);
+    font-size: 8px;
+    padding: 0 4px;
+    opacity: 0.6;
+  }
+
+  .news-loading {
+    font-size: 11px;
+    color: #6A4A30;
+    padding: 0 16px;
   }
 
   /* SUBSCRIBE */

@@ -1,9 +1,10 @@
 ---
 const navLinks = [
-  { href: '/blog', label: 'Articles' },
-  { href: '/money', label: 'Global Money' },
-  { href: '/culture', label: 'Culture' },
-  { href: '/about', label: 'About' },
+  { href: '/blog',      en: 'Articles',      es: 'Artículos' },
+  { href: '/money',     en: 'Global Money',  es: 'Dinero Global' },
+  { href: '/goods',     en: 'Global Goods',  es: 'Productos' },
+  { href: '/travel',    en: 'Travel',         es: 'Viajes' },
+  { href: '/about',     en: 'About',          es: 'Nosotros' },
 ];
 ---
 
@@ -12,31 +13,78 @@ const navLinks = [
     <a href="/" class="nav-logo">GeoPueblo</a>
     <ul class="nav-links">
       {navLinks.map(link => (
-        <li><a href={link.href}>{link.label}</a></li>
+        <li>
+          <a href={link.href}>
+            <span class="t-en">{link.en}</span>
+            <span class="t-es" style="display:none">{link.es}</span>
+          </a>
+        </li>
       ))}
     </ul>
-    <a href="#subscribe" class="nav-cta">Join the village</a>
+
+    <!-- Language toggle -->
+    <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+      <span class="lang-en">🇺🇸 EN</span>
+      <span class="lang-es" style="display:none">🇻🇪 ES</span>
+    </button>
+
+    <a href="#subscribe" class="nav-cta">
+      <span class="t-en">Join the village</span>
+      <span class="t-es" style="display:none">Únete al pueblo</span>
+    </a>
   </div>
 </nav>
+
+<script>
+  // Read saved preference
+  const saved = localStorage.getItem('gp-lang') || 'en';
+  let currentLang = saved;
+
+  function applyLang(lang: string) {
+    currentLang = lang;
+    localStorage.setItem('gp-lang', lang);
+
+    // Show/hide all EN and ES spans across the whole page
+    document.querySelectorAll('.t-en').forEach(el => {
+      (el as HTMLElement).style.display = lang === 'en' ? '' : 'none';
+    });
+    document.querySelectorAll('.t-es').forEach(el => {
+      (el as HTMLElement).style.display = lang === 'es' ? '' : 'none';
+    });
+
+    // Toggle button face
+    const btnEn = document.querySelector('.lang-en') as HTMLElement;
+    const btnEs = document.querySelector('.lang-es') as HTMLElement;
+    if (btnEn) btnEn.style.display = lang === 'en' ? '' : 'none';
+    if (btnEs) btnEs.style.display = lang === 'es' ? '' : 'none';
+
+    // Update html lang attribute
+    document.documentElement.lang = lang;
+  }
+
+  // Apply on load
+  applyLang(currentLang);
+
+  // Toggle on click
+  document.getElementById('langToggle')?.addEventListener('click', () => {
+    applyLang(currentLang === 'en' ? 'es' : 'en');
+  });
+</script>
 
 <style>
   .nav {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 10;
     padding: 1.25rem 2rem;
   }
-
   .nav-inner {
     max-width: 1100px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
   }
-
   .nav-logo {
     font-size: 18px;
     font-weight: 600;
@@ -45,25 +93,39 @@ const navLinks = [
     text-decoration: none;
     margin-right: auto;
   }
-
   .nav-links {
     list-style: none;
     display: flex;
     gap: 1.5rem;
   }
-
   .nav-links a {
     color: rgba(255,255,255,0.85);
     font-size: 14px;
     text-decoration: none;
     transition: color 0.2s;
   }
-
   .nav-links a:hover {
     color: var(--color-terra-lt);
     text-decoration: none;
   }
-
+  /* Language toggle button */
+  .lang-toggle {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    font-family: var(--font-main);
+  }
+  .lang-toggle:hover {
+    background: rgba(255,255,255,0.22);
+  }
   .nav-cta {
     background: var(--color-terra-lt);
     color: var(--color-dark);
@@ -74,12 +136,10 @@ const navLinks = [
     text-decoration: none;
     white-space: nowrap;
   }
-
   .nav-cta:hover {
     background: #fff;
     text-decoration: none;
   }
-
   @media (max-width: 640px) {
     .nav-links { display: none; }
   }
