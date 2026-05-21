@@ -5,37 +5,39 @@ import Footer from '../components/Footer.astro';
 
 const pillars = [
   {
-    icon: '💰',
-    title: 'Global money',
-    desc: 'Send, save, and grow money across borders — without the fees.',
+    icon: '💸',
+    title: 'Global Money',
+    desc: 'Send, receive, and grow money across borders — smarter, faster, and with fewer fees wherever you are.',
     href: '/money',
   },
   {
-    icon: '📍',
-    title: 'Place & culture',
-    desc: 'Discover the people, food, and stories behind every geo.',
-    href: '/culture',
+    icon: '📦',
+    title: 'Global Goods',
+    desc: 'Access food, health, and everyday products from around the world — delivered to your door, no matter where that is.',
+    href: '/goods',
+  },
+  {
+    icon: '🌐',
+    title: 'Global Services',
+    desc: 'Find the platforms, tools, and professionals that work across borders — from banking to healthcare to remote work.',
+    href: '/services',
   },
   {
     icon: '🤝',
-    title: 'Global community',
-    desc: 'Connect with others navigating life between cultures.',
+    title: 'Global Community',
+    desc: 'Connect with others navigating life between cultures — shared stories, local knowledge, and a village that spans the world.',
     href: '/community',
-  },
-  {
-    icon: '🏦',
-    title: 'Expat finance',
-    desc: 'Banking, investing, and taxes — wherever you call home.',
-    href: '/money',
   },
 ];
 
 const topics = [
   'Sending money home',
   'Best expat banks',
-  'Cost of living by country',
-  'Remittance guides',
-  'Cultural travel',
+  'Package forwarding',
+  'Health products globally',
+  'Remote work tools',
+  'Cross-border healthcare',
+  'Diaspora community',
   'Multi-currency accounts',
 ];
 ---
@@ -62,7 +64,7 @@ const topics = [
 
   <!-- BAND -->
   <div class="band">
-    <p>🌎 &nbsp; Global money &nbsp;·&nbsp; Cultural discovery &nbsp;·&nbsp; Cross-border life</p>
+    <p>🌎 &nbsp; Global Money &nbsp;·&nbsp; Global Goods &nbsp;·&nbsp; Global Services &nbsp;·&nbsp; Global Community</p>
   </div>
 
   <!-- PILLARS -->
@@ -122,9 +124,9 @@ const topics = [
   .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80');
+    background-image: url('https://images.unsplash.com/photo-1695596254299-c541eee4eef7?w=1400&q=80');
     background-size: cover;
-    background-position: center 60%;
+    background-position: center 50%;
   }
 
   .hero-overlay {
