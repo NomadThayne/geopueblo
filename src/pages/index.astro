@@ -1,0 +1,376 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const pillars = [
+  {
+    icon: '💰',
+    title: 'Global money',
+    desc: 'Send, save, and grow money across borders — without the fees.',
+    href: '/money',
+  },
+  {
+    icon: '📍',
+    title: 'Place & culture',
+    desc: 'Discover the people, food, and stories behind every geo.',
+    href: '/culture',
+  },
+  {
+    icon: '🤝',
+    title: 'Global community',
+    desc: 'Connect with others navigating life between cultures.',
+    href: '/community',
+  },
+  {
+    icon: '🏦',
+    title: 'Expat finance',
+    desc: 'Banking, investing, and taxes — wherever you call home.',
+    href: '/money',
+  },
+];
+
+const topics = [
+  'Sending money home',
+  'Best expat banks',
+  'Cost of living by country',
+  'Remittance guides',
+  'Cultural travel',
+  'Multi-currency accounts',
+];
+---
+
+<BaseLayout>
+  <!-- HERO -->
+  <section class="hero">
+    <Nav />
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">GeoPueblo</p>
+      <h1>The world is<br>your <span>pueblo</span></h1>
+      <p class="hero-sub">
+        Explore money, culture, and life across borders —
+        for the globally curious and financially savvy.
+      </p>
+      <div class="hero-cta">
+        <a href="/blog" class="btn-primary">Start exploring</a>
+        <a href="#subscribe" class="btn-secondary">Join the village</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAND -->
+  <div class="band">
+    <p>🌎 &nbsp; Global money &nbsp;·&nbsp; Cultural discovery &nbsp;·&nbsp; Cross-border life</p>
+  </div>
+
+  <!-- PILLARS -->
+  <section class="section pillars-section">
+    <h2 class="section-title">What is GeoPueblo?</h2>
+    <p class="section-sub">Your guide to living, moving, and thriving across the world's villages</p>
+    <div class="pillars">
+      {pillars.map(p => (
+        <a href={p.href} class="pillar">
+          <div class="pillar-icon">{p.icon}</div>
+          <h3>{p.title}</h3>
+          <p>{p.desc}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TOPICS -->
+  <section class="section topics-section">
+    <p class="topics-label">Featured topics</p>
+    <div class="topics">
+      {topics.map(t => <span class="topic-tag">{t}</span>)}
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- EMAIL SUBSCRIBE -->
+  <section class="section subscribe-section" id="subscribe">
+    <h2 class="section-title">Join the village</h2>
+    <p class="section-sub">Get guides, tips, and stories — in English and Spanish.</p>
+    <form class="subscribe-form" action="#" method="POST">
+      <input type="email" name="email" placeholder="your@email.com" required />
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="subscribe-note">No spam. Unsubscribe anytime.</p>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 5rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80');
+    background-size: cover;
+    background-position: center 60%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 15, 5, 0.70);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+  }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    color: var(--color-terra-lt);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 600;
+    color: var(--color-cream);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span {
+    color: var(--color-terra-lt);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--color-terra-lt);
+    color: var(--color-dark);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 28px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    text-decoration: none;
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    color: var(--color-cream);
+    font-size: 15px;
+    padding: 13px 28px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.3);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.22);
+    text-decoration: none;
+  }
+
+  /* BAND */
+  .band {
+    background: var(--color-terra-lt);
+    padding: 10px 2rem;
+    text-align: center;
+  }
+
+  .band p {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-dark);
+    letter-spacing: 0.5px;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--color-gray-mid);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  /* PILLARS */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .pillar {
+    background: var(--color-gray-lt);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #EDE5DA;
+  }
+
+  .pillar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(30,15,5,0.08);
+    text-decoration: none;
+  }
+
+  .pillar-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .pillar h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .pillar p {
+    font-size: 14px;
+    color: var(--color-gray-mid);
+    line-height: 1.6;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #EDE5DA;
+    margin: 0;
+  }
+
+  /* TOPICS */
+  .topics-section {
+    text-align: center;
+    padding: 2.5rem 2rem;
+  }
+
+  .topics-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    margin-bottom: 1rem;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .topic-tag {
+    background: var(--color-gray-lt);
+    border: 1px solid #EDE5DA;
+    border-radius: 20px;
+    padding: 7px 16px;
+    font-size: 14px;
+    color: var(--color-gray-mid);
+  }
+
+  /* SUBSCRIBE */
+  .subscribe-section {
+    text-align: center;
+  }
+
+  .subscribe-form {
+    display: flex;
+    gap: 8px;
+    max-width: 440px;
+    margin: 1.25rem auto 0;
+  }
+
+  .subscribe-form input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #D4C4B4;
+    font-size: 15px;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    background: #fff;
+  }
+
+  .subscribe-form input:focus {
+    outline: none;
+    border-color: var(--color-terra);
+  }
+
+  .subscribe-form button {
+    background: var(--color-terra);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 500;
+    font-family: var(--font-main);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .subscribe-form button:hover {
+    background: var(--color-dark-mid);
+  }
+
+  .subscribe-note {
+    font-size: 12px;
+    color: var(--color-gray-mid);
+    margin-top: 10px;
+  }
+</style>
