@@ -237,7 +237,9 @@ const topics = [
         const fmt = rate >= 100 ? rate.toFixed(2) : rate >= 10 ? rate.toFixed(3) : rate.toFixed(4);
         return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
       }).filter(Boolean).join('<span class="fx-sep">·</span>');
-      return `<div class="fx-scroll">${items}<span class="fx-sep">·</span>${items}</div>`;
+      // Set animation duration based on number of items (30px per item approx)
+      const duration = FX_PAIRS.length * 3;
+      return `<div class="fx-scroll" style="animation-duration:${duration}s">${items}<span class="fx-sep">·</span>${items}</div>`;
     }
 
     async function loadFX() {
@@ -264,7 +266,10 @@ const topics = [
       const html = items.map(i =>
         `<a class="news-item" href="${i.link}" target="_blank" rel="noopener">${i.title}</a>`
       ).join('<span class="news-sep">◆</span>');
-      return `${html}<span class="news-sep">◆</span>${html}`;
+      // Base speed on total character count — ~0.08s per character feels right
+      const totalChars = items.reduce((sum, i) => sum + i.title.length, 0);
+      const duration = Math.max(60, Math.round(totalChars * 0.08));
+      return `<div class="news-scroll" style="animation: newsScroll ${duration}s linear infinite; display:flex; align-items:center; white-space:nowrap;">${html}<span class="news-sep">◆</span>${html}</div>`;
     }
 
     async function loadNews(lang = 'en') {
@@ -626,7 +631,7 @@ const topics = [
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    width: 0; /* forces flex child to respect overflow:hidden */
   }
 
   .fx-scroll {
@@ -634,6 +639,7 @@ const topics = [
     align-items: center;
     white-space: nowrap;
     animation: fxScroll 25s linear infinite;
+    padding-left: 16px;
   }
 
   @keyframes fxScroll {
@@ -693,17 +699,17 @@ const topics = [
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    width: 0;
+    padding-left: 16px;
   }
 
   .news-track {
     display: flex;
     align-items: center;
     white-space: nowrap;
-    animation: newsScroll 120s linear infinite;
   }
 
-  .news-track:hover {
+  .news-track:hover .news-scroll {
     animation-play-state: paused;
   }
 
