@@ -267,22 +267,28 @@ const topics = [
       return `${html}<span class="news-sep">◆</span>${html}`;
     }
 
-    async function loadNews() {
+    async function loadNews(lang = 'en') {
       const track = document.getElementById('newsTrack');
       if (!track) return;
       // Show fallback immediately
       track.innerHTML = buildNewsHtml(FALLBACK_HEADLINES);
       try {
-        const res  = await fetch(`${WORKER_URL}/api/news`);
+        const endpoint = lang === 'es' ? `${WORKER_URL}/api/news-es` : `${WORKER_URL}/api/news`;
+        const res  = await fetch(endpoint);
         const data = await res.json();
         if (data.items?.length) track.innerHTML = buildNewsHtml(data.items);
       } catch { /* keep fallback */ }
     }
 
     loadFX();
-    loadNews();
+    loadNews(localStorage.getItem('gp-lang') || 'en');
     setInterval(loadFX, 300000);
-    setInterval(loadNews, 300000);
+    setInterval(() => loadNews(localStorage.getItem('gp-lang') || 'en'), 300000);
+
+    // Reload news when language toggles
+    document.getElementById('langToggle')?.addEventListener('click', () => {
+      setTimeout(() => loadNews(localStorage.getItem('gp-lang') || 'en'), 100);
+    });
   </script>
 
   <hr class="divider" />
