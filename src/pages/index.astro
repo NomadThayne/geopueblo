@@ -187,7 +187,6 @@ const topics = [
 
   <!-- FX TICKER -->
   <div class="fx-bar" id="fxBar">
-    <span class="fx-label">🌐 FX</span>
     <div class="fx-track" id="fxTrack">
       <span class="fx-loading">Loading rates…</span>
     </div>
@@ -195,7 +194,6 @@ const topics = [
 
   <!-- NEWS TICKER -->
   <div class="news-bar" id="newsBar">
-    <span class="news-label">📰 World</span>
     <div class="news-track-wrap">
       <div class="news-track" id="newsTrack">
         <span class="news-loading">Loading headlines…</span>
@@ -501,7 +499,7 @@ const topics = [
   .city-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(245, 240, 235, 0.91);
+    background: rgba(245, 240, 235, 0.82);
   }
 
   .city-label {
@@ -598,27 +596,12 @@ const topics = [
 
   /* FX TICKER */
   .fx-bar {
-    background: #111;
+    background: #000;
     display: flex;
     align-items: center;
     overflow: hidden;
-    height: 36px;
-    border-bottom: 1px solid #333;
-  }
-
-  .fx-label {
-    flex-shrink: 0;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #FFD580;
-    padding: 0 14px;
-    border-right: 1px solid #333;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    background: #1A1A1A;
+    height: 34px;
+    border-bottom: 1px solid #222;
   }
 
   .fx-track {
@@ -627,12 +610,12 @@ const topics = [
     height: 100%;
     display: flex;
     align-items: center;
+    padding: 0 16px;
   }
 
   .fx-scroll {
     display: flex;
     align-items: center;
-    gap: 0;
     white-space: nowrap;
     animation: fxScroll 40s linear infinite;
   }
@@ -645,59 +628,45 @@ const topics = [
   .fx-item {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 0 16px;
+    gap: 7px;
+    padding: 0 18px;
   }
 
   .fx-pair {
     font-size: 11px;
     font-weight: 700;
-    color: #AAA;
+    color: #999;
     letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
 
   .fx-rate {
-    font-size: 12px;
-    font-weight: 600;
-    color: #F5F5F5;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
     font-variant-numeric: tabular-nums;
   }
 
   .fx-sep {
     color: #444;
     font-size: 10px;
-    padding: 0 4px;
+    padding: 0 2px;
   }
 
   .fx-loading {
-    font-size: 11px;
-    color: #888;
+    font-size: 12px;
+    color: #666;
     padding: 0 16px;
   }
 
   /* NEWS TICKER */
   .news-bar {
-    background: #1A1A1A;
+    background: #111;
     display: flex;
     align-items: center;
     overflow: hidden;
-    height: 38px;
+    height: 36px;
     border-bottom: 2px solid var(--color-terra);
-  }
-
-  .news-label {
-    flex-shrink: 0;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #1E0F05;
-    background: #FFD580;
-    padding: 0 14px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
   }
 
   .news-track-wrap {
@@ -706,6 +675,7 @@ const topics = [
     height: 100%;
     display: flex;
     align-items: center;
+    padding: 0 16px;
   }
 
   .news-track {
@@ -726,9 +696,10 @@ const topics = [
 
   .news-item {
     display: inline-block;
-    font-size: 12px;
-    color: #E8E8E8;
-    padding: 0 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    padding: 0 22px;
     text-decoration: none;
     cursor: pointer;
     transition: color 0.2s;
@@ -736,20 +707,20 @@ const topics = [
   }
 
   .news-item:hover {
-    color: #FFD580;
+    color: var(--color-terra-lt);
     text-decoration: none;
   }
 
   .news-sep {
     color: var(--color-terra);
-    font-size: 8px;
-    padding: 0 4px;
-    opacity: 0.8;
+    font-size: 10px;
+    padding: 0 2px;
+    opacity: 0.9;
   }
 
   .news-loading {
-    font-size: 11px;
-    color: #888;
+    font-size: 12px;
+    color: #666;
     padding: 0 16px;
   }
 
