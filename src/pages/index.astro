@@ -281,26 +281,52 @@ const topics = [
 
   <hr class="divider" />
 
-  <!-- EMAIL SUBSCRIBE -->
-  <section class="section subscribe-section" id="subscribe">
+  <!-- FREE MEMBERSHIP -->
+  <section class="section membership-section" id="subscribe">
+    <div class="membership-badge">
+      <span class="t-en">🎉 Free Membership</span>
+      <span class="t-es" style="display:none">🎉 Membresía Gratuita</span>
+    </div>
     <h2 class="section-title">
-      <span class="t-en">Join the village</span>
-      <span class="t-es" style="display:none">Únete al pueblo</span>
+      <span class="t-en">Join GeoPueblo — it's free</span>
+      <span class="t-es" style="display:none">Únete a GeoPueblo — es gratis</span>
     </h2>
     <p class="section-sub">
-      <span class="t-en">Get guides, tips, and stories — in English and Spanish.</span>
-      <span class="t-es" style="display:none">Recibe guías, consejos e historias — en inglés y español.</span>
+      <span class="t-en">Get guides, tips, exclusive deals, and stories — in English and Spanish.</span>
+      <span class="t-es" style="display:none">Recibe guías, consejos, ofertas exclusivas e historias — en inglés y español.</span>
     </p>
+    <div class="membership-perks">
+      <div class="perk">
+        <span class="perk-icon">💸</span>
+        <span class="t-en">Money transfer guides</span>
+        <span class="t-es" style="display:none">Guías de transferencias</span>
+      </div>
+      <div class="perk">
+        <span class="perk-icon">📦</span>
+        <span class="t-en">Members-only box deals</span>
+        <span class="t-es" style="display:none">Ofertas exclusivas de cajas</span>
+      </div>
+      <div class="perk">
+        <span class="perk-icon">✈️</span>
+        <span class="t-en">Travel club discounts</span>
+        <span class="t-es" style="display:none">Descuentos de club de viajes</span>
+      </div>
+      <div class="perk">
+        <span class="perk-icon">🤝</span>
+        <span class="t-en">Community stories</span>
+        <span class="t-es" style="display:none">Historias de comunidad</span>
+      </div>
+    </div>
     <form class="subscribe-form" action="#" method="POST">
       <input type="email" name="email" placeholder="your@email.com" required />
       <button type="submit">
-        <span class="t-en">Subscribe</span>
-        <span class="t-es" style="display:none">Suscribirse</span>
+        <span class="t-en">Get free access</span>
+        <span class="t-es" style="display:none">Acceso gratuito</span>
       </button>
     </form>
     <p class="subscribe-note">
-      <span class="t-en">No spam. Unsubscribe anytime.</span>
-      <span class="t-es" style="display:none">Sin spam. Cancela cuando quieras.</span>
+      <span class="t-en">No spam. No credit card. Unsubscribe anytime.</span>
+      <span class="t-es" style="display:none">Sin spam. Sin tarjeta. Cancela cuando quieras.</span>
     </p>
   </section>
 
@@ -572,27 +598,27 @@ const topics = [
 
   /* FX TICKER */
   .fx-bar {
-    background: #1E0F05;
+    background: #111;
     display: flex;
     align-items: center;
     overflow: hidden;
     height: 36px;
-    border-bottom: 1px solid #3A2010;
+    border-bottom: 1px solid #333;
   }
 
   .fx-label {
     flex-shrink: 0;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--color-terra-lt);
+    color: #FFD580;
     padding: 0 14px;
-    border-right: 1px solid #3A2010;
+    border-right: 1px solid #333;
     height: 100%;
     display: flex;
     align-items: center;
-    background: #2C1A0E;
+    background: #1A1A1A;
   }
 
   .fx-track {
@@ -625,33 +651,33 @@ const topics = [
 
   .fx-pair {
     font-size: 11px;
-    font-weight: 600;
-    color: #A08060;
+    font-weight: 700;
+    color: #AAA;
     letter-spacing: 0.5px;
   }
 
   .fx-rate {
     font-size: 12px;
-    font-weight: 500;
-    color: #E8D0B0;
+    font-weight: 600;
+    color: #F5F5F5;
     font-variant-numeric: tabular-nums;
   }
 
   .fx-sep {
-    color: #3A2010;
+    color: #444;
     font-size: 10px;
     padding: 0 4px;
   }
 
   .fx-loading {
     font-size: 11px;
-    color: #6A4A30;
+    color: #888;
     padding: 0 16px;
   }
 
   /* NEWS TICKER */
   .news-bar {
-    background: #2C1A0E;
+    background: #1A1A1A;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -662,11 +688,11 @@ const topics = [
   .news-label {
     flex-shrink: 0;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #1E0F05;
-    background: var(--color-terra-lt);
+    background: #FFD580;
     padding: 0 14px;
     height: 100%;
     display: flex;
@@ -701,7 +727,7 @@ const topics = [
   .news-item {
     display: inline-block;
     font-size: 12px;
-    color: #D4B896;
+    color: #E8E8E8;
     padding: 0 20px;
     text-decoration: none;
     cursor: pointer;
@@ -710,7 +736,7 @@ const topics = [
   }
 
   .news-item:hover {
-    color: var(--color-terra-lt);
+    color: #FFD580;
     text-decoration: none;
   }
 
@@ -718,25 +744,72 @@ const topics = [
     color: var(--color-terra);
     font-size: 8px;
     padding: 0 4px;
-    opacity: 0.6;
+    opacity: 0.8;
   }
 
   .news-loading {
     font-size: 11px;
-    color: #6A4A30;
+    color: #888;
     padding: 0 16px;
   }
 
-  /* SUBSCRIBE */
-  .subscribe-section {
+  /* MEMBERSHIP SECTION */
+  .membership-section {
     text-align: center;
+    background: var(--color-gray-lt);
+    max-width: 100%;
+    padding: 4rem 2rem;
+    border-top: 1px solid #EDE5DA;
+  }
+
+  .membership-badge {
+    display: inline-block;
+    background: var(--color-terra);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .membership-section .section-title {
+    font-size: 28px;
+    margin-bottom: 0.5rem;
+  }
+
+  .membership-perks {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 1.5rem auto;
+    max-width: 600px;
+  }
+
+  .perk {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #EDE5DA;
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: var(--color-text);
+  }
+
+  .perk-icon {
+    font-size: 14px;
   }
 
   .subscribe-form {
     display: flex;
     gap: 8px;
     max-width: 440px;
-    margin: 1.25rem auto 0;
+    margin: 0 auto;
   }
 
   .subscribe-form input {
