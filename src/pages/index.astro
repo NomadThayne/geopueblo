@@ -235,8 +235,11 @@ const topics = [
         const fmt = rate >= 100 ? rate.toFixed(2) : rate >= 10 ? rate.toFixed(3) : rate.toFixed(4);
         return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
       }).filter(Boolean);
-      // Each half must be identical (including trailing sep) for translateX(-50%) loop to be seamless
-      const half = items.join('<span class="fx-sep">|</span>') + '<span class="fx-sep" style="padding:0 24px">|</span>';
+      const sep = '<span class="fx-sep">|</span>';
+      // Repeat enough times that the content is always wider than the viewport.
+      // translateX(-50%) loops back to start — both halves must be identical.
+      const REPEATS = 6; // 10 pairs × 6 = 60 items per half, well over any screen width
+      const half = Array(REPEATS).fill(items.join(sep)).join(sep) + sep;
       return `<div class="fx-scroll">${half}${half}</div>`;
     }
 
