@@ -202,79 +202,85 @@ const topics = [
   </div>
 
   <script>
-    // ── FX TICKER ──────────────────────────────────────────────
-    // Frankfurter API — free, no key, ECB data
-    // Focus on currencies relevant to GeoPueblo's markets
+    // ── CONFIG ─────────────────────────────────────────────────
+    // After deploying the worker (see workers/ticker.js), replace
+    // this URL with your actual worker URL:
+    // e.g. https://geopueblo-ticker.YOUR-SUBDOMAIN.workers.dev
+    const WORKER_URL = 'https://geopueblo-ticker.thayne.workers.dev';
+
     const FX_PAIRS = [
-      { from: 'USD', to: 'EUR',  label: 'EUR/USD' },
-      { from: 'USD', to: 'GBP',  label: 'GBP/USD' },
-      { from: 'USD', to: 'COP',  label: 'USD/COP' },
-      { from: 'USD', to: 'HNL',  label: 'USD/HNL' },
-      { from: 'USD', to: 'GTQ',  label: 'USD/GTQ' },
-      { from: 'USD', to: 'CAD',  label: 'USD/CAD' },
-      { from: 'USD', to: 'BRL',  label: 'USD/BRL' },
-      { from: 'USD', to: 'MXN',  label: 'USD/MXN' },
-      { from: 'USD', to: 'JPY',  label: 'USD/JPY' },
-      { from: 'USD', to: 'CNY',  label: 'USD/CNY' },
+      { to: 'EUR', label: 'EUR/USD' },
+      { to: 'GBP', label: 'GBP/USD' },
+      { to: 'COP', label: 'USD/COP' },
+      { to: 'HNL', label: 'USD/HNL' },
+      { to: 'GTQ', label: 'USD/GTQ' },
+      { to: 'CAD', label: 'USD/CAD' },
+      { to: 'BRL', label: 'USD/BRL' },
+      { to: 'MXN', label: 'USD/MXN' },
+      { to: 'JPY', label: 'USD/JPY' },
+      { to: 'CNY', label: 'USD/CNY' },
     ];
+
+    // Hardcoded fallback rates (updated May 2026) — always visible
+    const FALLBACK_RATES: Record<string, number> = {
+      EUR: 0.9201, GBP: 0.7891, COP: 4185.0, HNL: 24.89,
+      GTQ: 7.74,   CAD: 1.3642, BRL: 5.1820, MXN: 17.12,
+      JPY: 155.42, CNY: 7.2450
+    };
+
+    function buildFXHtml(rates: Record<string, number>) {
+      const items = FX_PAIRS.map(p => {
+        const rate = rates[p.to];
+        if (!rate) return '';
+        const fmt = rate >= 100 ? rate.toFixed(2) : rate >= 10 ? rate.toFixed(3) : rate.toFixed(4);
+        return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
+      }).filter(Boolean).join('<span class="fx-sep">·</span>');
+      return `<div class="fx-scroll">${items}<span class="fx-sep">·</span>${items}</div>`;
+    }
 
     async function loadFX() {
       const track = document.getElementById('fxTrack');
       if (!track) return;
+      // Show fallback immediately so bars are never empty
+      track.innerHTML = buildFXHtml(FALLBACK_RATES);
       try {
-        const res  = await fetch('https://api.frankfurter.dev/v2/latest?base=USD&symbols=EUR,GBP,COP,HNL,GTQ,CAD,BRL,MXN,JPY,CNY');
+        const res  = await fetch(`${WORKER_URL}/api/fx`);
         const data = await res.json();
-        const rates = data.rates;
-        const items = FX_PAIRS
-          .filter(p => rates[p.to])
-          .map(p => {
-            const rate = rates[p.to];
-            const fmt  = rate >= 100
-              ? rate.toFixed(2)
-              : rate >= 10
-                ? rate.toFixed(3)
-                : rate.toFixed(4);
-            return `<span class="fx-item"><span class="fx-pair">${p.label}</span><span class="fx-rate">${fmt}</span></span>`;
-          }).join('<span class="fx-sep">·</span>');
-        // Double up for seamless loop
-        track.innerHTML = `<div class="fx-scroll">${items}<span class="fx-sep">·</span>${items}</div>`;
-      } catch {
-        track.innerHTML = '<span class="fx-loading">Rates unavailable</span>';
-      }
+        if (data.rates) track.innerHTML = buildFXHtml(data.rates);
+      } catch { /* keep fallback */ }
     }
 
-    // ── NEWS TICKER ────────────────────────────────────────────
-    // rss2json.com — free CORS proxy for BBC World News RSS
+    // Hardcoded fallback headlines — always visible
+    const FALLBACK_HEADLINES = [
+      { title: 'GeoPueblo: Connecting the Latin American diaspora to the world', link: '#' },
+      { title: 'Send money, goods, and travel — all in one platform', link: '#' },
+      { title: 'Venezuela · Cuba · Haiti · Honduras · Guatemala · El Salvador · Colombia', link: '#' },
+      { title: 'Free membership — join the GeoPueblo village today', link: '#' },
+    ];
+
+    function buildNewsHtml(items: Array<{title: string, link: string}>) {
+      const html = items.map(i =>
+        `<a class="news-item" href="${i.link}" target="_blank" rel="noopener">${i.title}</a>`
+      ).join('<span class="news-sep">◆</span>');
+      return `${html}<span class="news-sep">◆</span>${html}`;
+    }
+
     async function loadNews() {
       const track = document.getElementById('newsTrack');
       if (!track) return;
+      // Show fallback immediately
+      track.innerHTML = buildNewsHtml(FALLBACK_HEADLINES);
       try {
-        const rss = 'https://feeds.bbci.co.uk/news/world/rss.xml';
-        const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}&count=15`;
-        const res  = await fetch(url);
+        const res  = await fetch(`${WORKER_URL}/api/news`);
         const data = await res.json();
-        if (!data.items?.length) throw new Error('No items');
-        const items = data.items
-          .map((item: any) => `<a class="news-item" href="${item.link}" target="_blank" rel="noopener">${item.title}</a>`)
-          .join('<span class="news-sep">◆</span>');
-        // Double up for seamless loop
-        track.innerHTML = `${items}<span class="news-sep">◆</span>${items}`;
-      } catch {
-        // Fallback headlines if API unavailable
-        const fallback = [
-          'GeoPueblo: The world is your pueblo',
-          'Cross-border commerce connecting the Latin American diaspora',
-          'Global goods, money, services and travel — one platform',
-        ];
-        const items = fallback.map(h => `<span class="news-item">${h}</span>`).join('<span class="news-sep">◆</span>');
-        track.innerHTML = `${items}<span class="news-sep">◆</span>${items}`;
-      }
+        if (data.items?.length) track.innerHTML = buildNewsHtml(data.items);
+      } catch { /* keep fallback */ }
     }
 
     loadFX();
     loadNews();
-    // Refresh FX every 5 minutes
     setInterval(loadFX, 300000);
+    setInterval(loadNews, 300000);
   </script>
 
   <hr class="divider" />
