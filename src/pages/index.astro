@@ -76,10 +76,8 @@ const topics = [
         <span class="t-es" style="display:none">El mundo es<br>tu <span>pueblo</span></span>
       </h1>
       <p class="hero-sub">
-        <span class="t-en">Explore money, culture, and life across borders —
-        for the globally curious and financially savvy.</span>
-        <span class="t-es" style="display:none">Explora dinero, cultura y vida sin fronteras —
-        para el curioso global y el inteligente financiero.</span>
+        <span class="t-en">Explore money, culture, and life across borders.</span>
+        <span class="t-es" style="display:none">Explora dinero, cultura y vida sin fronteras.</span>
       </p>
       <div class="hero-cta">
         <a href="/blog" class="btn-primary">
@@ -616,15 +614,18 @@ const topics = [
     background: #000;
     height: 40px;
     overflow: hidden;
-    position: relative;
+    display: flex;
+    align-items: center;
     z-index: 10;
     border-bottom: 2px solid #333;
   }
 
   .fx-track {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
     overflow: hidden;
+    height: 100%;
   }
 
   .fx-scroll {
@@ -632,7 +633,8 @@ const topics = [
     align-items: center;
     height: 40px;
     white-space: nowrap;
-    animation: fxScroll 35s linear infinite;
+    will-change: transform;
+    animation: fxScroll 52s linear infinite;
   }
 
   .fx-scroll:hover {
@@ -649,9 +651,11 @@ const topics = [
     align-items: center;
     gap: 8px;
     padding: 0 20px;
+    flex-shrink: 0;
   }
 
   .fx-pair {
+    font-family: monospace;
     font-size: 12px;
     font-weight: 700;
     color: #FFD580;
@@ -660,6 +664,7 @@ const topics = [
   }
 
   .fx-rate {
+    font-family: monospace;
     font-size: 14px;
     font-weight: 700;
     color: #fff;
@@ -669,26 +674,14 @@ const topics = [
   .fx-sep {
     color: #555;
     font-size: 14px;
-    padding: 0 4px;
-  }
-
-  .fx-loading {
-    color: #888;
-    font-size: 12px;
-    padding: 0 20px;
-    line-height: 40px;
-  }
-
-  .fx-sep {
-    color: #888;
-    font-size: 12px;
     padding: 0 6px;
   }
 
   .fx-loading {
     font-size: 12px;
-    color: #666;
-    padding: 0 16px;
+    color: #888;
+    padding: 0 20px;
+    line-height: 40px;
   }
 
   /* NEWS TICKER */
