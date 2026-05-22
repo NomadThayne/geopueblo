@@ -1,0 +1,167 @@
+---
+// SubscribeForm.astro
+// Drop this into any Astro page: <SubscribeForm />
+---
+
+<form id="subscribe-form" novalidate>
+  <div class="form-row">
+    <div class="field">
+      <label for="firstName">First name</label>
+      <input
+        id="firstName"
+        name="firstName"
+        type="text"
+        autocomplete="given-name"
+        placeholder="Ada"
+        required
+      />
+    </div>
+    <div class="field">
+      <label for="lastName">Last name</label>
+      <input
+        id="lastName"
+        name="lastName"
+        type="text"
+        autocomplete="family-name"
+        placeholder="Lovelace"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="email">Email</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      placeholder="ada@example.com"
+      required
+    />
+  </div>
+
+  <button type="submit" id="submit-btn">
+    <span class="btn-text">Subscribe</span>
+    <span class="btn-spinner" aria-hidden="true">⟳</span>
+  </button>
+
+  <p id="form-message" role="alert" aria-live="polite"></p>
+</form>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 480px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  input:focus {
+    outline: 2px solid #2563eb;
+    border-color: transparent;
+  }
+  button {
+    padding: 0.625rem 1.5rem;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+  }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .btn-spinner {
+    display: none;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  button.loading .btn-text { visibility: hidden; }
+  button.loading .btn-spinner { display: inline-block; position: absolute; left: 50%; transform: translateX(-50%); }
+  #form-message {
+    font-size: 0.875rem;
+    min-height: 1.25rem;
+  }
+  #form-message.success { color: #16a34a; }
+  #form-message.error   { color: #dc2626; }
+</style>
+
+<script>
+  const form    = document.getElementById("subscribe-form");
+  const btn     = document.getElementById("submit-btn");
+  const message = document.getElementById("form-message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    message.textContent = "";
+    message.className = "";
+
+    // Basic client-side validation
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.classList.add("loading");
+
+    const payload = {
+      firstName: form.firstName.value.trim(),
+      lastName:  form.lastName.value.trim(),
+      email:     form.email.value.trim(),
+    };
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        message.textContent = "✓ You're subscribed!";
+        message.className   = "success";
+        form.reset();
+      } else if (data.code === "COMPLIANCE_REVIEW") {
+        // Don't reveal the real reason — generic message to the user
+        message.textContent = "We're unable to process your subscription right now. Please contact us directly.";
+        message.className   = "error";
+      } else {
+        message.textContent = data.error || "Something went wrong. Please try again.";
+        message.className   = "error";
+      }
+    } catch {
+      message.textContent = "Network error. Please try again.";
+      message.className   = "error";
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove("loading");
+    }
+  });
+</script>
