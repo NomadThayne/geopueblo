@@ -3,15 +3,14 @@ const navLinks = [
   { href: '/blog',      en: 'Articles',      es: 'Artículos' },
   { href: '/money',     en: 'Global Money',  es: 'Dinero Global' },
   { href: '/goods',     en: 'Global Goods',  es: 'Productos' },
-  { href: '/travel',    en: 'Travel',         es: 'Viajes' },
-  { href: '/about',     en: 'About',          es: 'Nosotros' },
+  { href: '/travel',    en: 'Travel',        es: 'Viajes' },
+  { href: '/about',     en: 'About',         es: 'Nosotros' },
 ];
 ---
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/images/logo.png" alt="GeoPueblo" width="36" height="36" class="nav-logo-img" />
-      <span class="nav-logo-text">GeoPueblo</span>
+      <img src="/images/logo.png" alt="GeoPueblo" class="nav-logo-img" />
     </a>
     <ul class="nav-links">
       {navLinks.map(link => (
@@ -23,7 +22,6 @@ const navLinks = [
         </li>
       ))}
     </ul>
-    <!-- Language toggle -->
     <button class="lang-toggle" id="langToggle" aria-label="Switch language">
       <span class="lang-en">🇺🇸 EN</span>
       <span class="lang-es" style="display:none">🇻🇪 ES</span>
@@ -35,30 +33,24 @@ const navLinks = [
   </div>
 </nav>
 <script>
-  // Read saved preference
   const saved = localStorage.getItem('gp-lang') || 'en';
   let currentLang = saved;
   function applyLang(lang: string) {
     currentLang = lang;
     localStorage.setItem('gp-lang', lang);
-    // Show/hide all EN and ES spans across the whole page
     document.querySelectorAll('.t-en').forEach(el => {
       (el as HTMLElement).style.display = lang === 'en' ? '' : 'none';
     });
     document.querySelectorAll('.t-es').forEach(el => {
       (el as HTMLElement).style.display = lang === 'es' ? '' : 'none';
     });
-    // Toggle button face
     const btnEn = document.querySelector('.lang-en') as HTMLElement;
     const btnEs = document.querySelector('.lang-es') as HTMLElement;
     if (btnEn) btnEn.style.display = lang === 'en' ? '' : 'none';
     if (btnEs) btnEs.style.display = lang === 'es' ? '' : 'none';
-    // Update html lang attribute
     document.documentElement.lang = lang;
   }
-  // Apply on load
   applyLang(currentLang);
-  // Toggle on click
   document.getElementById('langToggle')?.addEventListener('click', () => {
     applyLang(currentLang === 'en' ? 'es' : 'en');
   });
@@ -68,7 +60,7 @@ const navLinks = [
     position: absolute;
     top: 0; left: 0; right: 0;
     z-index: 10;
-    padding: 1.25rem 2rem;
+    padding: 1rem 2rem;
   }
   .nav-inner {
     max-width: 1100px;
@@ -78,27 +70,20 @@ const navLinks = [
     gap: 1.5rem;
   }
   .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: block;
     text-decoration: none;
     margin-right: auto;
-  }
-  .nav-logo-img {
-    width: 36px;
-    height: 36px;
-    border-radius: 7px;
-    display: block;
     flex-shrink: 0;
   }
-  .nav-logo-text {
-    font-size: 18px;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: 0.5px;
+  .nav-logo-img {
+    width: 72px;
+    height: 72px;
+    display: block;
+    border-radius: 12px;
+    transition: opacity 0.2s;
   }
-  .nav-logo:hover .nav-logo-text {
-    color: var(--color-terra-lt);
+  .nav-logo:hover .nav-logo-img {
+    opacity: 0.85;
   }
   .nav-links {
     list-style: none;
@@ -115,7 +100,6 @@ const navLinks = [
     color: var(--color-terra-lt);
     text-decoration: none;
   }
-  /* Language toggle button */
   .lang-toggle {
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.3);
@@ -149,6 +133,6 @@ const navLinks = [
   }
   @media (max-width: 640px) {
     .nav-links { display: none; }
-    .nav-logo-text { display: none; }
+    .nav-logo-img { width: 56px; height: 56px; }
   }
 </style>
