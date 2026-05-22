@@ -1,9 +1,10 @@
----
----
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <span class="footer-logo">GeoPueblo</span>
+      <a href="/" class="footer-logo-link">
+        <img src="/images/logo.png" alt="GeoPueblo" width="40" height="40" class="footer-logo-img" />
+        <span class="footer-logo-text">GeoPueblo</span>
+      </a>
       <p>
         <span class="t-en">The world is your pueblo.</span>
         <span class="t-es" style="display:none">El mundo es tu pueblo.</span>
@@ -34,7 +35,19 @@
     gap: 1.5rem;
     text-align: center;
   }
-  .footer-logo {
+  .footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 4px;
+  }
+  .footer-logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+  .footer-logo-text {
     font-size: 20px;
     font-weight: 600;
     color: var(--color-terra-lt);

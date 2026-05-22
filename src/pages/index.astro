@@ -64,13 +64,21 @@ const topics = [
 ---
 
 <BaseLayout>
+  <!--
+    FAVICON NOTE: Add these to your BaseLayout <head>:
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+  -->
   <!-- HERO -->
   <section class="hero">
     <Nav />
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">GeoPueblo</p>
+      <div class="hero-logo">
+        <img src="/images/logo.png" alt="GeoPueblo" width="80" height="80" />
+      </div>
       <h1>
         <span class="t-en">The world is<br>your <span>pueblo</span></span>
         <span class="t-es" style="display:none">El mundo es<br>tu <span>pueblo</span></span>
@@ -353,6 +361,17 @@ const topics = [
 
 <style>
   /* HERO */
+  .hero-logo {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-logo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
   .hero {
     position: relative;
     min-height: 520px;
