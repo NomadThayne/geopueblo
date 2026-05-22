@@ -1,73 +1,73 @@
-# GeoPueblo
+# geopueblo.com — OFAC Subscriber Check
 
-**The world is your pueblo** — a bilingual blog covering global money, culture, and cross-border life.
+Simple OFAC screening on subscriber signups using [SanctionsLookup](https://sanctionslookup.com) (free tier).
 
-## Tech Stack
-
-- [Astro](https://astro.build) — static site generator
-- Deployed via [Cloudflare Pages](https://pages.cloudflare.com) (free)
-- Source hosted on [GitHub](https://github.com)
-
-## Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start dev server at http://localhost:4321
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## Project Structure
+## File Overview
 
 ```
-geopueblo/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── Nav.astro
-│   │   └── Footer.astro
-│   ├── layouts/
-│   │   └── BaseLayout.astro
-│   └── pages/
-│       ├── index.astro     ← Landing page
-│       └── blog.astro      ← Blog index
-├── astro.config.mjs
-└── package.json
+functions/
+  api/
+    subscribe.js        ← Cloudflare Pages Function (the backend)
+src/
+  components/
+    SubscribeForm.astro ← Drop-in Astro form component
 ```
 
-## Deploy to Cloudflare Pages
+---
 
-1. Push this repo to GitHub
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com)
-3. Click **Create a project** → Connect to Git → select this repo
-4. Set build settings:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-5. Click **Save and Deploy**
+## Setup (5 steps)
 
-Cloudflare will auto-deploy on every push to `main`. Done!
+### 1. Get a free SanctionsLookup API key
+Go to https://sanctionslookup.com/register — no credit card required.
 
-## Adding Blog Posts
+### 2. Add environment variable in Cloudflare Pages
+In your Cloudflare dashboard:
+  Pages → geopueblo → Settings → Environment variables → Add variable
 
-Add new `.astro` files to `src/pages/blog/` or connect a headless CMS like [Contentful](https://contentful.com) or [Sanity](https://sanity.io).
+| Variable                   | Value                  |
+|----------------------------|------------------------|
+| `SANCTIONS_LOOKUP_API_KEY` | your key from step 1   |
+| `OFAC_MIN_SCORE`           | `85` (recommended)     |
 
-## Hero Image
+### 3. Copy files into your repo
+```
+cp functions/api/subscribe.js    <your-repo>/functions/api/subscribe.js
+cp src/components/SubscribeForm.astro <your-repo>/src/components/SubscribeForm.astro
+```
 
-The hero uses a free Unsplash photo. To replace it:
-1. Download your preferred image to `public/images/hero.jpg`
-2. In `src/pages/index.astro`, change the `background-image` URL to `/images/hero.jpg`
+### 4. Use the form in any Astro page
+```astro
+---
+import SubscribeForm from '../components/SubscribeForm.astro';
+---
+<SubscribeForm />
+```
 
-## Affiliate Links
+### 5. Wire up your email provider
+In `functions/api/subscribe.js`, find `proceedWithSubscription()` and replace the stub with
+your actual provider (Mailchimp, ConvertKit, Resend, etc.).
 
-Add affiliate links naturally within blog posts. High-converting programs:
-- [Wise](https://wise.com/partners) — $50–100/referral
-- [Remitly](https://remitly.com/affiliates) — $20–40/signup
-- [Revolut](https://revolut.com/referral) — $30–60/activation
+---
+
+## How it works
+
+1. User submits first name, last name, email
+2. Cloudflare Pages Function calls SanctionsLookup `/v1/screen`
+3. If score ≥ `OFAC_MIN_SCORE` → block + log for compliance review
+4. If no match → proceed to email provider subscription
+
+## Fail-open behavior
+If SanctionsLookup is unreachable (network error, outage), the function logs the error
+and **allows** the subscription through. This avoids blocking legitimate subscribers
+due to a third-party outage. You can flip this to fail-closed by modifying
+`proceedWithSubscription()` to return a 503 instead.
+
+## Score threshold
+- `85` — good balance: catches clear matches, minimizes false positives on common names
+- `90+` — tighter, fewer false positives, may miss slight name variations
+- `80`  — SanctionsLookup default; broader net
+
+## Next step: Option 1 (self-hosted)
+When ready to remove the third-party dependency, replace the SanctionsLookup call
+with a Cloudflare Worker that downloads the OFAC SDN CSV directly from Treasury,
+caches it in Cloudflare KV, and does fuzzy matching in-process.
